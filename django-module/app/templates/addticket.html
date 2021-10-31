@@ -1,0 +1,88 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block title %} Add Ticket to DB {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <!-- Header -->
+    <div class="header bg-indigo py-lg-8">
+        <div class="container-fluid mt--6">
+            <div class="header-body">
+                <div class="row">
+                    <div class="col-xl-4 col-md-6">
+                        <div class="card card-stats bg-default shadow">
+                            <!-- Card body -->
+                            <div class="card-body bg-default shadow">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="text-center">
+                                            <h5 class="card-title text-uppercase text-white mb-0">Add new Ticket to DB</h5>
+                                        </div>
+                                        <form class="bg-default mt-2" action="{% url 'add_ticket' %}" method="post">
+                                            {% csrf_token %}
+                                            <input class="form-control" placeholder="Ticket" type="ticket" {{ form.addTicketField }}>
+
+                                            <div class="text-center">
+                                                <input class="btn btn-primary" type="submit" value="Add">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="header bg-indigo py-lg-8">
+        <div class="container-fluid mt--6">
+            <div class="header-body">
+                <div class="row">
+                    <div class="col-xl-4 col-md-6">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header bg-indigo py-lg-8">
+        <div class="container-fluid mt--6">
+            <div class="header-body">
+                <div class="row">
+                    <div class="col-xl-4 col-md-6">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header bg-indigo py-lg-8">
+        <div class="container-fluid mt--6">
+            <div class="header-body">
+                <div class="row">
+                    <div class="col-xl-4 col-md-6">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+
+
+{% endblock javascripts %}

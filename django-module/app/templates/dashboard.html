@@ -1,0 +1,271 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+
+{% block title %} Dashboard {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-indigo py-7 py-lg-8">
+        <div class="container-fluid mt--6">
+            <div class="header-body">
+                <div class="row">
+
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats bg-default shadow">
+                            <!-- Card body -->
+                            <div class="card-body bg-default shadow">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-white mb-0">Today date</h5>
+                                        <span class="h2 font-weight-bold text-cyan mb-0">{{ today_date|default:0 }}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-blue text-white rounded-circle shadow">
+                                            <i class="ni ni-world"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-sm">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats bg-default shadow bg-default shadow">
+                            <!-- Card body -->
+                            <div class="card-body bg-default shadow">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-white mb-0">Your current role</h5>
+                                        <span class="h2 font-weight-bold text-cyan mb-0">{{ current_role }}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-blue text-white rounded-circle shadow">
+                                            <i class="ni ni-trophy"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-sm">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats bg-default shadow">
+                            <!-- Card body -->
+                            <div class="card-body bg-default shadow">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-white mb-0">Total Users</h5>
+                                        <span class="h2 font-weight-bold text-cyan mb-0">{{ total_users|default:0 }}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-blue text-white rounded-circle shadow">
+                                            <i class="ni ni-single-02"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-sm">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Widget 2 -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card card-stats bg-default shadow bg-default shadow">
+                            <!-- Card body -->
+                            <div class="card-body bg-default shadow">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title text-uppercase text-white mb-0">Total Tickets in DB</h5>
+                                        <span class="h2 font-weight-bold text-cyan mb-0">{{ total_tickets }}</span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="icon icon-shape bg-gradient-blue text-white rounded-circle shadow">
+                                            <i class="ni ni-collection"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mt-3 mb-0 text-sm">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="container-fluid bg-indigo mt--7 ">
+        <div class="row">
+
+            <div class="col-xl-4">
+                <div class="card bg-default shadow">
+                    <div class="card-header bg-default shadow">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="text-white h3 mb-0">Available Forecasts</h6>
+                            </div>
+                            <div class="col text-right">
+                                <a href="{% url 'clear_selected_tickets' %}" class="btn btn-sm btn-primary">Clear Selected Forecasts</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bar Chart  -->
+
+                        <!-- Chart -->
+
+                        <div class="table-responsive">
+                        <table class="table table-hover align-items-center table-dark table-flush">
+                        {% if tickets %}
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Company name</th>
+                                <th scope="col">Specialist</th>
+                                <th scope="col">&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for ticket in tickets %}
+                                    <tr style="transform: rotate(0);">
+                                    <th scope="row"><a href="{% url 'select_ticket' %}{{ ticket.id}}" class="stretched-link "></a>{{ ticket.name }}</th>
+                                        <td>{{ ticket.source }}</td>
+                                        <td></td>
+
+                                    </tr>
+                                {% endfor %}
+
+                            </tbody>
+                            {% else %}<div class="chart mt-7"></div>
+                            {% endif %}
+                        </table>
+                        </div>
+                        </div>
+
+            </div>
+            <div class="col-xl-8 ">
+                <div class="card bg-default shadow">
+                    <div class="card-header bg-default shadow">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h6 class="text-white h3 mb-0">Stock Forecast</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table align-items-center table-flush order-list">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Average Price By Month</th>
+                            </tr>
+                            </thead>
+                    </table>
+
+                    <!-- Line Chart -->
+                    <div class="card-body">
+                        <!-- Chart -->
+                        <div class="chart mt-3">
+                            <!-- Chart wrapper -->
+                            <canvas id="chartSales" class="chart-canvas"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card bg-default shadow" id="orderItems">
+                    <div class="card-header bg-default shadow">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="text-white h3 mb-0">Stock by date</h3>
+                            </div>
+                            {#                            <form action="">{% csrf_token %}</form>#}
+                            {% if user_role_check %}
+                            <div class="col text-right">
+                                <a href="{% url 'orders' %}" class="btn btn-sm btn-primary get-order-form">Add Stock Forecast By Date</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <!-- Projects table -->
+                        <table class="table align-items-center table-dark table-flush">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Company name</th>
+                                <th scope="col">Ticket</th>
+                                <th scope="col">Min Price</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Max Price</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Specialist</th>
+                                <th scope="col">&nbsp;</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if orders %}
+                                {% for order in orders %}
+                                    <tr>
+                                        <th scope="row">{{ order.id }}</th>
+
+                                        <td class="text-left">
+                                            <div class="dropdown">
+                                              <a class="btn btn-sm btn-icon-only text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                {{ order.ticket_name }}
+                                              </a>
+                                              <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                <a class="dropdown-item" href="https://finance.yahoo.com/quote/{{ order.product_name }}" target="_blank" rel="noopener">Detailed stock info</a>
+                                              </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ order.product_name }}</td>
+                                        <td>${{ order.min_price }}</td>
+                                        <td>${{ order.price }}</td>
+                                        <td>${{ order.max_price }}</td>
+                                        <td>{{ order.created_time|date:'Y-m-d' }}</td>
+                                        <td>{{ order.ticket_source }}</td>
+                                        <td>
+                                            {% if user_role_check %}
+                                            <a href="{% url 'orders' order.id %}" class="get-order-form">Edit</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+
+                        {% if orders %}
+                            {{ orders.pagination }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+{% block javascripts %}
+    <script>
+        SalesChart({{ orders_month_report|safe }}, {{ orders_month_report_labels|safe }});
+        OrderChart({{ orders_month_report|safe }}, {{ orders_month_report_labels|safe }});
+    </script>
+
+{% endblock javascripts %}
